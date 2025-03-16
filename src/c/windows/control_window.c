@@ -9,11 +9,19 @@ static ActionBarLayer *s_action_bar_layer;
 static GBitmap *s_plus_bitmap, *s_bolt_bitmap, *s_minus_bitmap;
 
 static DictionaryIterator *out_iter;
+static char stren_str[24];
+static int current_strength;
 
-static int current_strength; 
+static void update_strength()
+{
+  snprintf(stren_str, sizeof(stren_str), "%d%%", current_strength);
+  text_layer_set_text(s_label_layer, stren_str);
+}
+
 static void up_click_handler()
 {
   current_strength += 1;
+  update_strength();
 }
 
 static void select_click_handler()
@@ -36,8 +44,9 @@ static void select_click_handler()
 
 static void down_click_handler()
 {
-  if (current_strength < 0) {
-    current_strength -= 1;
+  if (current_strength > 0) {
+    current_strength += -1;
+    update_strength();
   }
 }
 
@@ -54,13 +63,13 @@ static void window_load(Window *window)
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
 
-  const GEdgeInsets label_insets = {.top = 0, .right = ACTION_BAR_WIDTH, .left = ACTION_BAR_WIDTH / 2};
+  const GEdgeInsets label_insets = {.top = (168/2)-(42/2)- 6, .right = ACTION_BAR_WIDTH, .left = ACTION_BAR_WIDTH / 2};
   s_label_layer = text_layer_create(grect_inset(bounds, label_insets));
-  text_layer_set_text(s_label_layer, DIALOG_CHOICE_WINDOW_MESSAGE);
-  text_layer_set_text_color(s_label_layer, PBL_IF_COLOR_ELSE(GColorWhite, GColorBlack));
+  update_strength();
+  text_layer_set_text_color(s_label_layer, PBL_IF_COLOR_ELSE(GColorWhite,GColorBlack));
   text_layer_set_background_color(s_label_layer, GColorClear);
   text_layer_set_text_alignment(s_label_layer, GTextAlignmentCenter);
-  text_layer_set_font(s_label_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
+  text_layer_set_font(s_label_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
   layer_add_child(window_layer, text_layer_get_layer(s_label_layer));
 
   s_plus_bitmap = gbitmap_create_with_resource(RESOURCE_ID_PLUS);
