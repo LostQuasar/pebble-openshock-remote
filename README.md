@@ -1,4 +1,4 @@
-# OpenShock Rebble Remote Control
+# Pebble OpenShock Remote
 
 ![](screenshot.png)
 
