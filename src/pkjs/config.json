@@ -1,0 +1,49 @@
+[
+  {
+    "type": "heading",
+    "defaultValue": "OpenShock Remote"
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Settings"
+      },
+      {
+        "type": "input",
+        "messageKey": "api_key",
+        "label": "OpenShock API Key"
+      },
+      {
+        "type": "input",
+        "messageKey": "shocker_id",
+        "label": "OpenShock Shocker ID"
+      },
+      {
+        "type": "slider",
+        "messageKey": "shock_max",
+        "defaultValue": 100,
+        "label": "Shock Limit",
+        "description": "Maximum strength of shock",
+        "min": 1,
+        "max": 100,
+        "step": 1
+      },
+      {
+        "type": "slider",
+        "messageKey": "shock_dur",
+        "defaultValue": 300,
+        "label": "Shock Limit",
+        "description": "Maximum strength of shock",
+        "min": 300,
+        "max": 30000,
+        "step": 100
+      }
+    ]
+  },
+  {
+    "type": "submit",
+    "defaultValue": "Save"
+  }
+]

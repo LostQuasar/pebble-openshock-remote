@@ -1,0 +1,5 @@
+.lock-waf_linux_build
+package-lock.json
+.vscode/
+node_modules/
+build/

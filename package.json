@@ -1,0 +1,59 @@
+{
+  "name": "os-remote",
+  "author": "LostQuasar",
+  "version": "1.0",
+  "dependencies": {
+    "pebble-clay": "^1.0.4"
+  },
+  "pebble": {
+    "displayName": "OS Remote",
+    "uuid": "5e8eec99-fa47-4edf-997c-e28d9b3c5c35",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "targetPlatforms": [
+      "aplite",
+      "basalt",
+      "chalk",
+      "diorite"
+    ],
+    "watchapp": {
+      "watchface": false
+    },
+    "resources": {
+      "media": [
+        {
+          "type": "bitmap",
+          "name": "BOLT",
+          "file": "images/bolt.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "PLUS",
+          "file": "images/plus.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "MINUS",
+          "file": "images/minus.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "CONFIG_REQUIRED",
+          "file": "images/config-required.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "NETWORK_REQUIRED",
+          "file": "images/network-required.png"
+        }
+      ]
+    },
+    "messageKeys": [
+      "api_key",
+      "shocker_id",
+      "shock_max",
+      "shock_dur",
+      "shock_str"
+    ]
+  }
+} 
