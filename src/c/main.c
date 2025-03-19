@@ -13,7 +13,7 @@ typedef struct ClaySettings
 } ClaySettings;
 
 // An instance of the struct
-static ClaySettings settings;
+ClaySettings settings;
 bool js_ready;
 static bool connected;
 // Save the settings to persistent storage

@@ -12,6 +12,14 @@ static DictionaryIterator *out_iter;
 static char stren_str[24];
 static int current_strength;
 extern bool js_ready;
+typedef struct ClaySettings
+{
+  int maxStrength;
+  bool configured;
+} ClaySettings;
+
+
+extern ClaySettings settings;
 
 static void update_strength()
 {
@@ -21,8 +29,11 @@ static void update_strength()
 
 static void up_click_handler()
 {
-  current_strength += 1;
-  update_strength();
+  if (current_strength < settings.maxStrength){
+    current_strength += 1;
+    update_strength();
+  
+  }
 }
 
 static void select_click_handler()
