@@ -45,6 +45,12 @@
           "type": "bitmap",
           "name": "NETWORK_REQUIRED",
           "file": "images/network-required.png"
+        },
+        {
+          "file": "images/menu_icon.png",
+          "menuIcon": true,
+          "name": "IMAGE_MENU_ICON",
+          "type": "bitmap"
         }
       ]
     },
@@ -53,7 +59,8 @@
       "shocker_id",
       "shock_max",
       "shock_dur",
-      "shock_str"
+      "shock_str",
+      "js_ready"
     ]
   }
-} 
+}

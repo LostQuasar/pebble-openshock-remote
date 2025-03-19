@@ -1,5 +1,5 @@
 #include "control_window.h"
-#include <pebble.h>
+#define STRENGTH_KEY 2
 
 static Window *s_main_window;
 static TextLayer *s_label_layer;
@@ -11,6 +11,7 @@ static GBitmap *s_plus_bitmap, *s_bolt_bitmap, *s_minus_bitmap;
 static DictionaryIterator *out_iter;
 static char stren_str[24];
 static int current_strength;
+extern bool js_ready;
 
 static void update_strength()
 {
@@ -26,6 +27,11 @@ static void up_click_handler()
 
 static void select_click_handler()
 {
+  if (!js_ready)
+  {
+    return;
+  }
+
   AppMessageResult result = app_message_outbox_begin(&out_iter);
   if (result == APP_MSG_OK)
   {
@@ -44,7 +50,8 @@ static void select_click_handler()
 
 static void down_click_handler()
 {
-  if (current_strength > 0) {
+  if (current_strength > 0)
+  {
     current_strength += -1;
     update_strength();
   }
@@ -59,14 +66,15 @@ static void click_config_provider(void *context)
 
 static void window_load(Window *window)
 {
-  current_strength = 5;
+  persist_read_data(STRENGTH_KEY, &current_strength, sizeof(current_strength));
+
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
 
-  const GEdgeInsets label_insets = {.top = (168/2)-(42/2)- 6, .right = ACTION_BAR_WIDTH, .left = ACTION_BAR_WIDTH / 2};
+  const GEdgeInsets label_insets = {.top = (168 / 2) - (42 / 2) - 6, .right = ACTION_BAR_WIDTH, .left = ACTION_BAR_WIDTH / 2};
   s_label_layer = text_layer_create(grect_inset(bounds, label_insets));
   update_strength();
-  text_layer_set_text_color(s_label_layer, PBL_IF_COLOR_ELSE(GColorWhite,GColorBlack));
+  text_layer_set_text_color(s_label_layer, PBL_IF_COLOR_ELSE(GColorWhite, GColorBlack));
   text_layer_set_background_color(s_label_layer, GColorClear);
   text_layer_set_text_alignment(s_label_layer, GTextAlignmentCenter);
   text_layer_set_font(s_label_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
@@ -86,6 +94,8 @@ static void window_load(Window *window)
 
 static void window_unload(Window *window)
 {
+
+  persist_write_data(STRENGTH_KEY, &current_strength, sizeof(current_strength));
   text_layer_destroy(s_label_layer);
   action_bar_layer_destroy(s_action_bar_layer);
   bitmap_layer_destroy(s_icon_layer);
