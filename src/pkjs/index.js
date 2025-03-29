@@ -17,8 +17,8 @@ Pebble.addEventListener('ready', function() {
 Pebble.addEventListener('appmessage', function (e) {
     var dict = e.payload;
 
-    if (dict["shock_str"]) {
-        sendShock(dict["shock_str"]);
+    if (dict["shock_str"] && dict["shock_dur"]) {
+        sendShock(dict["shock_str"], dict["shock_dur"]);
     }
     if (dict["check_online"]) {
         checkOnlineStatus();
@@ -56,13 +56,13 @@ function checkAPI() {
 }
 
 
-function sendShock(shock_str) {
+function sendShock(shock_str, shock_dur) {
     var settings = JSON.parse(localStorage.getItem("clay-settings"));
     if (settings && settings.api_key && settings.shocker_id && settings.shock_max && settings.shock_dur) {
         api_key = settings.api_key;
         shocker_id = settings.shocker_id;
         shock_max = settings.shock_max;
-        shock_dur = settings.shock_dur;
+        shock_dur = shock_dur;
     }
     var xhr = new XMLHttpRequest();
     xhr.open(

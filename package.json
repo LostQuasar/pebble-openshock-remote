@@ -1,7 +1,7 @@
 {
   "name": "os-remote",
   "author": "LostQuasar",
-  "version": "1.0",
+  "version": "1.2",
   "dependencies": {
     "pebble-clay": "^1.0.4"
   },
@@ -38,6 +38,16 @@
         },
         {
           "type": "bitmap",
+          "name": "TIME",
+          "file": "images/time.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "STRENGTH",
+          "file": "images/strength.png"
+        },
+        {
+          "type": "bitmap",
           "name": "CONFIG_REQUIRED",
           "file": "images/config-required.png"
         },
@@ -51,6 +61,11 @@
           "menuIcon": true,
           "name": "IMAGE_MENU_ICON",
           "type": "bitmap"
+        },
+        {
+          "file": "font/Poppins_SemiBold.ttf",
+          "name": "POPPINS_SEMIBOLD_FONT_24",
+          "type": "font"
         }
       ]
     },
@@ -58,6 +73,7 @@
       "api_key",
       "shocker_id",
       "shock_max",
+      "dur_max",
       "shock_dur",
       "shock_str",
       "js_ready"

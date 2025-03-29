@@ -24,21 +24,21 @@
         "type": "slider",
         "messageKey": "shock_max",
         "defaultValue": 100,
-        "label": "Shock Limit",
-        "description": "Maximum strength of shock",
+        "label": "Shock Maxmimum",
+        "description": "Maximum strength of a shock",
         "min": 1,
         "max": 100,
         "step": 1
       },
       {
         "type": "slider",
-        "messageKey": "shock_dur",
-        "defaultValue": 300,
-        "label": "Shock Limit",
-        "description": "Maximum strength of shock",
-        "min": 300,
-        "max": 30000,
-        "step": 100
+        "messageKey": "dur_max",
+        "defaultValue": 30,
+        "label": "Duration Maxmimum (seconds)",
+        "description": "Maximum duration of a shock",
+        "min": 1,
+        "max": 30,
+        "step": 1
       }
     ]
   },

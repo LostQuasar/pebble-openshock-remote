@@ -9,6 +9,7 @@
 typedef struct ClaySettings
 {
   int maxStrength;
+  int maxDuration;
   bool configured;
 } ClaySettings;
 
@@ -38,11 +39,13 @@ static void prv_inbox_received_handler(DictionaryIterator *iter, void *context)
   }
 
   Tuple *shock_max_t = dict_find(iter, MESSAGE_KEY_shock_max);
+  Tuple *dur_max_t = dict_find(iter, MESSAGE_KEY_dur_max);
   Tuple *shocker_id_t = dict_find(iter, MESSAGE_KEY_shocker_id);
   Tuple *api_key_t = dict_find(iter, MESSAGE_KEY_api_key);
   if (shock_max_t)
   {
     settings.maxStrength = shock_max_t->value->int32;
+    settings.maxDuration = dur_max_t->value->int32;
   }
   if (shocker_id_t && api_key_t)
   {
@@ -55,17 +58,16 @@ static void prv_inbox_received_handler(DictionaryIterator *iter, void *context)
 static void init()
 {
   js_ready = false;
-  const uint32_t inbox_size = 128;
+  const uint32_t inbox_size = 128; //Probably Larger than needed
   const uint32_t outbox_size = 128;
   app_message_register_inbox_received(prv_inbox_received_handler);
   app_message_open(inbox_size, outbox_size);
   prv_read_settings();
-  connected = connection_service_peek_pebble_app_connection();
   if (!settings.configured)
   {
     config_needed_window_push();
   }
-  else if (!connected) {
+  else if (connection_service_peek_pebble_app_connection() == false) {
     network_needed_window_push();
   }
   else{
