@@ -20,49 +20,16 @@ Pebble.addEventListener('appmessage', function (e) {
     if (dict["shock_str"] && dict["shock_dur"]) {
         sendShock(dict["shock_str"], dict["shock_dur"]);
     }
-    if (dict["check_online"]) {
-        checkOnlineStatus();
-    }
-
 });
-
-function checkOnlineStatus() {
-    var dict = {}
-    dict[keys.online_status] = checkAPI();
-
-    Pebble.sendAppMessage(dict, function () {
-    }, function (e) {
-        console.log('Message failed: ' + JSON.stringify(e));
-    });
-}
-
-function checkAPI() {
-    var xhr = new XMLHttpRequest();
-    xhr.open(
-        "GET",
-        "https://api.openshock.app/1",
-        false
-    );
-    xhr.setRequestHeader("accept", "application/json");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send();
-    var response = JSON.parse(xhr.responseText);
-    if (response["message"] == "OpenShock") {
-        return 1
-    }
-    else {
-        return 0
-    }
-}
-
 
 function sendShock(shock_str, shock_dur) {
     var settings = JSON.parse(localStorage.getItem("clay-settings"));
-    if (settings && settings.api_key && settings.shocker_id && settings.shock_max && settings.shock_dur) {
+    if (settings && settings.api_key && settings.shocker_id) {
         api_key = settings.api_key;
         shocker_id = settings.shocker_id;
-        shock_max = settings.shock_max;
-        shock_dur = shock_dur;
+    }
+    else {
+        console.log("VARIABLES UNSET IN CONFIG")
     }
     var xhr = new XMLHttpRequest();
     xhr.open(
