@@ -162,7 +162,7 @@ static void down_click_handler()
     break;
 
   case TIME:
-    if (current_duration > 0)
+    if (current_duration > 300)
     {
       current_duration += -100;
       update_duration_text();
