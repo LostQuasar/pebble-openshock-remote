@@ -20,6 +20,16 @@
         "messageKey": "shocker_id",
         "label": "OpenShock Shocker ID"
       },
+	  {
+	    "type": "input",
+        "messageKey": "shocker_id2",
+        "label": "OpenShock Shocker ID 2"
+      },
+	  {
+	    "type": "input",
+        "messageKey": "shocker_id3",
+        "label": "OpenShock Shocker ID 3"
+      },
       {
         "type": "slider",
         "messageKey": "shock_max",
