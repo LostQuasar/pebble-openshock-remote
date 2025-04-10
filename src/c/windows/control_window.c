@@ -14,10 +14,13 @@ static char stren_str[24];
 static char dur_str[24];
 static int current_strength;
 static int current_duration;
+static int ID;
+static int mode;
 extern bool js_ready;
 static GFont poppins20;
 typedef struct ClaySettings
 {
+	
   int maxStrength;
   int maxDuration;
   bool configured;
@@ -62,6 +65,7 @@ void update_state(screenState new_state)
   {
   case MAIN:
     state = new_state;
+	ID = 2;
     action_bar_layer_set_icon(s_action_bar_layer, BUTTON_ID_UP, s_strength_bitmap);
     action_bar_layer_set_icon(s_action_bar_layer, BUTTON_ID_SELECT, s_bolt_bitmap);
     action_bar_layer_set_icon(s_action_bar_layer, BUTTON_ID_DOWN, s_time_bitmap);
@@ -71,8 +75,9 @@ void update_state(screenState new_state)
 
   case STRENGTH:
     state = new_state;
+	ID = 1;
     action_bar_layer_set_icon(s_action_bar_layer, BUTTON_ID_UP, s_plus_bitmap);
-    action_bar_layer_clear_icon(s_action_bar_layer, BUTTON_ID_SELECT);
+//    action_bar_layer_clear_icon(s_action_bar_layer, BUTTON_ID_SELECT);
     action_bar_layer_set_icon(s_action_bar_layer, BUTTON_ID_DOWN, s_minus_bitmap);
     text_layer_set_text_color(s_strength_label_layer, PBL_IF_COLOR_ELSE(GColorWhite, GColorBlack));
     text_layer_set_text_color(s_duration_label_layer, PBL_IF_COLOR_ELSE(GColorLightGray, GColorBlack));
@@ -80,8 +85,9 @@ void update_state(screenState new_state)
 
   case TIME:
     state = new_state;
+	ID = 3;
     action_bar_layer_set_icon(s_action_bar_layer, BUTTON_ID_UP, s_plus_bitmap);
-    action_bar_layer_clear_icon(s_action_bar_layer, BUTTON_ID_SELECT);
+ //   action_bar_layer_clear_icon(s_action_bar_layer, BUTTON_ID_SELECT);
     action_bar_layer_set_icon(s_action_bar_layer, BUTTON_ID_DOWN, s_minus_bitmap);
     text_layer_set_text_color(s_strength_label_layer, PBL_IF_COLOR_ELSE(GColorLightGray, GColorBlack));
     text_layer_set_text_color(s_duration_label_layer, PBL_IF_COLOR_ELSE(GColorWhite, GColorBlack));
@@ -97,6 +103,7 @@ static void up_click_handler()
   switch (state)
   {
   case MAIN:
+  ID = 1;
     update_state(STRENGTH);
     break;
   case STRENGTH:
@@ -120,8 +127,7 @@ static void up_click_handler()
 
 static void select_click_handler()
 {
-  if (state == MAIN)
-  {
+	mode = 2;
     if (!js_ready)
     {
       return;
@@ -132,25 +138,67 @@ static void select_click_handler()
     {
       dict_write_int(out_iter, MESSAGE_KEY_shock_str, &current_strength, sizeof(int), true);
       dict_write_int(out_iter, MESSAGE_KEY_shock_dur, &current_duration, sizeof(int), true);
+	  dict_write_int(out_iter, MESSAGE_KEY_ID, &ID, sizeof(int), true);
+	  dict_write_int(out_iter, MESSAGE_KEY_mode, &mode, sizeof(int), true);
       result = app_message_outbox_send();
       if (result != APP_MSG_OK)
       {
         APP_LOG(APP_LOG_LEVEL_ERROR, "Error sending the outbox: %d", (int)result);
       }
+	 else{
+	 vibes_short_pulse();
+	 }
     }
     else
     {
       APP_LOG(APP_LOG_LEVEL_ERROR, "Error preparing the outbox: %d", (int)result);
     }
-  }
+  
 }
 
+static void long_up_click_handler()
+{
+	mode = 1;
+    if (!js_ready)
+    {
+      return;
+    }
+
+    AppMessageResult result = app_message_outbox_begin(&out_iter);
+    if (result == APP_MSG_OK)
+    {
+      dict_write_int(out_iter, MESSAGE_KEY_shock_str, &current_strength, sizeof(int), true);
+      dict_write_int(out_iter, MESSAGE_KEY_shock_dur, &current_duration, sizeof(int), true);
+	  dict_write_int(out_iter, MESSAGE_KEY_ID, &ID, sizeof(int), true);
+	  dict_write_int(out_iter, MESSAGE_KEY_mode, &mode, sizeof(int), true);
+      result = app_message_outbox_send();
+      if (result != APP_MSG_OK)
+      {
+        APP_LOG(APP_LOG_LEVEL_ERROR, "Error sending the outbox: %d", (int)result);
+      }
+	  else
+	  {
+	vibes_double_pulse();
+	  }
+    }
+    else
+    {
+      APP_LOG(APP_LOG_LEVEL_ERROR, "Error preparing the outbox: %d", (int)result);
+    }
+  
+}
+
+static void long_down_click_handler()
+{
+	return;
+}
 static void down_click_handler()
 {
   switch (state)
   {
   case MAIN:
     update_state(TIME);
+	ID = 3;
     break;
 
   case STRENGTH:
@@ -185,10 +233,12 @@ static void back_click_handler()
   case STRENGTH:
   {
     update_state(MAIN);
+	ID = 2;
   }
   case TIME:
   {
     update_state(MAIN);
+	ID = 2;
   }
   default:
     break;
@@ -198,6 +248,7 @@ static void back_click_handler()
 static void click_config_provider(void *context)
 {
   window_single_repeating_click_subscribe(BUTTON_ID_UP, 125, up_click_handler);
+  window_long_click_subscribe(BUTTON_ID_SELECT, 300, long_up_click_handler, long_down_click_handler);
   window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
   window_single_repeating_click_subscribe(BUTTON_ID_DOWN, 125, down_click_handler);
 
