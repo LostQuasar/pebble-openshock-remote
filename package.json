@@ -76,7 +76,9 @@
       "dur_max",
       "shock_dur",
       "shock_str",
-      "js_ready"
+      "js_ready",
+	  "ID",
+	  "mode"
     ]
   }
 }
