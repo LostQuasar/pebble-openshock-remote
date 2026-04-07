@@ -14,7 +14,8 @@
       "aplite",
       "basalt",
       "chalk",
-      "diorite"
+      "diorite",
+      "emery"
     ],
     "watchapp": {
       "watchface": false
@@ -57,10 +58,10 @@
           "file": "images/network-required.png"
         },
         {
-          "file": "images/menu_icon.png",
-          "menuIcon": true,
-          "name": "IMAGE_MENU_ICON",
-          "type": "bitmap"
+          "type": "bitmap",
+          "name": "MENU_ICON",
+          "file": "images/icon.png",
+          "menuIcon": true
         },
         {
           "file": "font/Poppins_SemiBold.ttf",

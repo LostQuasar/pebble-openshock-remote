@@ -181,14 +181,19 @@ static void back_click_handler()
   case MAIN:
   {
     window_stack_pop(true);
+    break;
+
   }
   case STRENGTH:
   {
     update_state(MAIN);
+    break;
   }
   case TIME:
   {
     update_state(MAIN);
+    break;
+
   }
   default:
     break;

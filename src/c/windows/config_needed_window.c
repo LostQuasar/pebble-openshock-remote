@@ -34,7 +34,7 @@ static void window_load(Window *window) {
   text_layer_set_font(s_title_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
   layer_add_child(window_layer, text_layer_get_layer(s_title_layer));
 
-  const GEdgeInsets body_insets = {.top = 125, .right = 5, .left = 5};
+  const GEdgeInsets body_insets = {.top = (int16_t)(bounds.size.h - 46), .right = 5, .left = 5};
   s_body_layer = text_layer_create(grect_inset(bounds, body_insets));
   text_layer_set_text(s_body_layer, DIALOG_CONFIG_WINDOW_MESSAGE);
   text_layer_set_text_color(s_body_layer, PBL_IF_COLOR_ELSE(GColorWhite, GColorBlack));
