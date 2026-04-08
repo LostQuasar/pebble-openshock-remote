@@ -62,11 +62,6 @@
           "name": "MENU_ICON",
           "file": "images/icon.png",
           "menuIcon": true
-        },
-        {
-          "file": "font/Poppins_SemiBold.ttf",
-          "name": "POPPINS_SEMIBOLD_FONT_24",
-          "type": "font"
         }
       ]
     },
