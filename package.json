@@ -7,7 +7,7 @@
   },
   "pebble": {
     "displayName": "OS Remote",
-    "uuid": "5e8eec99-fa47-4edf-997c-e28d9b3c5c35",
+    "uuid": "7e88e025-adfa-47b0-a007-f366a87767d2",
     "sdkVersion": "3",
     "enableMultiJS": true,
     "targetPlatforms": [
