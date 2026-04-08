@@ -1,7 +1,7 @@
 {
   "name": "os-remote",
   "author": "LostQuasar",
-  "version": "1.4",
+  "version": "1.5",
   "dependencies": {
     "pebble-clay": "^1.0.4"
   },
