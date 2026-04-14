@@ -225,9 +225,9 @@ static void canvas_update_proc(Layer *layer, GContext *ctx)
   GEdgeInsets bottomBarInset = {.top = bounds.size.h / 2 + 5, .right = durationWidth + 10, .bottom = 10, .left = 10};
   GRect bottomBarBounds = grect_inset(bounds, bottomBarInset);
   int corner_radius = 5;
-  graphics_context_set_fill_color(ctx, GColorShockingPink);
+  graphics_context_set_fill_color(ctx, GColorJazzberryJam);
   graphics_fill_rect(ctx, topBarBounds, corner_radius, GCornersAll);
-  graphics_context_set_fill_color(ctx, GColorElectricBlue);
+  graphics_context_set_fill_color(ctx, GColorCobaltBlue);
   graphics_fill_rect(ctx, bottomBarBounds, corner_radius, GCornersAll);
 }
 
